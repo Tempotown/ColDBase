@@ -1,0 +1,74 @@
+# Agent Role Definitions
+# Each agent is assigned a specific role and set of capabilities
+
+---
+agents:
+  coordinator:
+    role: "orchestrator"
+    description: "Coordinator agent that plans, delegates, and monitors sub-agents"
+    capabilities:
+      - analyze_requirements
+      - plan_architecture
+      - delegate_tasks
+      - validate_results
+      - report_status
+    max_context_tokens: 4096
+    timeout_seconds: 300
+    
+  coder:
+    role: "code_generation"
+    description: "Generates code, creates files, handles programming tasks"
+    capabilities:
+      - generate_code
+      - create_files
+      - modify_files
+      - optimize_code
+      - document_code
+    max_context_tokens: 3072
+    timeout_seconds: 300
+    tools:
+      - file_creation
+      - file_modification
+      - code_generation
+      
+  deployer:
+    role: "deployment"
+    description: "Executes Docker commands, deploys services, manages infrastructure"
+    capabilities:
+      - execute_docker
+      - manage_containers
+      - deploy_services
+      - manage_volumes
+      - execute_shell_commands
+    max_context_tokens: 2048
+    timeout_seconds: 600  # Deployments take longer
+    tools:
+      - docker_exec
+      - shell_execution
+      - port_management
+      - volume_management
+      
+  tester:
+    role: "validation"
+    description: "Tests deployments, validates connectivity, checks service health"
+    capabilities:
+      - test_connectivity
+      - validate_services
+      - run_health_checks
+      - verify_functionality
+      - generate_test_reports
+    max_context_tokens: 2048
+    timeout_seconds: 300
+    tools:
+      - http_client
+      - shell_execution
+      - log_analysis
+      - report_generation
+
+# Allowed inter-agent communication patterns
+communication:
+  coordinator_to_coder: "request_code_generation"
+  coordinator_to_deployer: "request_deployment"
+  coordinator_to_tester: "request_validation"
+  coder_to_deployer: "pass_generated_files"
+  deployer_to_tester: "pass_deployment_info"

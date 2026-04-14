@@ -1,0 +1,133 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama-brain
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    environment:
+      OLLAMA_NUM_PARALLEL: ${OLLAMA_NUM_PARALLEL:-1}
+      OLLAMA_KEEP_ALIVE: ${OLLAMA_KEEP_ALIVE:-5m}
+      OLLAMA_DEBUG: ${OLLAMA_DEBUG:-0}
+    command: serve
+    healthcheck:
+      # The upstream Ollama image does not ship curl; use the bundled CLI to
+      # verify the local server is answering requests.
+      test: ["CMD", "ollama", "list"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    restart: unless-stopped
+    networks:
+      - zeroclaw-network
+
+  zeroclaw:
+    build:
+      context: ./vendor/zeroclaw
+      dockerfile: Dockerfile
+      target: dev
+      args:
+        ZEROCLAW_CARGO_FEATURES: ""
+    container_name: zeroclaw
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      API_KEY: http://ollama-brain:11434
+      PROVIDER: ollama
+      ZEROCLAW_MODEL: ${ZEROCLAW_MODEL:-phi4-mini}
+      ZEROCLAW_GATEWAY_PORT: ${ZEROCLAW_GATEWAY_PORT:-42617}
+      ZEROCLAW_ALLOW_PUBLIC_BIND: "true"
+      RUST_LOG: ${RUST_LOG:-info}
+    command: ["gateway", "start", "--port", "${ZEROCLAW_GATEWAY_PORT:-42617}", "--host", "[::]"]
+    volumes:
+      - ./workspace/zeroclaw-data:/zeroclaw-data
+    ports:
+      - "${HOST_PORT:-42617}:${ZEROCLAW_GATEWAY_PORT:-42617}"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "zeroclaw", "status", "--format=exit-code"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    networks:
+      - zeroclaw-network
+
+  coordinator:
+    build:
+      context: ./agents
+      dockerfile: Dockerfile
+    container_name: zeroclaw-coordinator
+    environment:
+      ROLE: coordinator
+      ZEROCLAW_URL: http://zeroclaw:42617
+      ZEROCLAW_MODEL: ${ZEROCLAW_MODEL:-auto}
+      OLLAMA_URL: http://ollama-brain:11434
+      ZEROCLAW_API_ENDPOINT: http://ollama-brain:11434
+      WORKSPACE_DIR: /workspace
+    volumes:
+      - ./workspace:/workspace
+    ports:
+      - "8001:8000"
+    restart: unless-stopped
+    networks:
+      - zeroclaw-network
+
+  coder:
+    build:
+      context: ./agents
+      dockerfile: Dockerfile
+    container_name: zeroclaw-coder
+    environment:
+      ROLE: coder
+      WORKSPACE_DIR: /workspace
+    volumes:
+      - ./workspace:/workspace
+    ports:
+      - "8002:8000"
+    restart: unless-stopped
+    networks:
+      - zeroclaw-network
+
+  deployer:
+    build:
+      context: ./agents
+      dockerfile: Dockerfile
+    container_name: zeroclaw-deployer
+    environment:
+      ROLE: deployer
+      WORKSPACE_DIR: /workspace
+    volumes:
+      - ./workspace:/workspace
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "8003:8000"
+    restart: unless-stopped
+    networks:
+      - zeroclaw-network
+
+  tester:
+    build:
+      context: ./agents
+      dockerfile: Dockerfile
+    container_name: zeroclaw-tester
+    environment:
+      ROLE: tester
+      WORKSPACE_DIR: /workspace
+    volumes:
+      - ./workspace:/workspace
+    ports:
+      - "8004:8000"
+    restart: unless-stopped
+    networks:
+      - zeroclaw-network
+
+networks:
+  zeroclaw-network:
+    driver: bridge
+
+volumes:
+  ollama-data:

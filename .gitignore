@@ -1,0 +1,71 @@
+# Git ignore for ZeroClaw workspace
+
+# Environment
+.env
+.env.local
+!.env.template
+.codex
+setup-codex
+
+# Docker
+docker-compose.override.yml
+.docker/
+
+# Build artifacts
+target/
+build/
+*.o
+*.so
+*.dylib
+
+# Dependencies
+Cargo.lock
+node_modules/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Workspace (generated files, but save important ones)
+workspace/projects/**/node_modules/
+workspace/projects/**/.git/
+workspace/projects/**/__pycache__/
+workspace/**/*.log
+
+# Model files (too large to git)
+ollama-data/
+
+# Container data
+logs/**/*.log
+agents/**/*.db
+
+# OS temporary
+.tmp
+.temp
+*.tmp
+
+# Keep important structure files
+!workspace/projects/.gitkeep
+!workspace/memory/.gitkeep
+!skills/.gitkeep
+!agents/.gitkeep
+!logs/.gitkeep
+vendor/*
+!vendor/zeroclaw/
+!vendor/zeroclaw/**
+vendor/zeroclaw/.claude/
+vendor/zeroclaw/.github/
+vendor/zeroclaw/.githooks/
+vendor/zeroclaw/.vscode/
+vendor/zeroclaw/dist/
+vendor/zeroclaw/docs/
+vendor/zeroclaw/firmware/
+vendor/zeroclaw/marketplace/
+vendor/zeroclaw/scripts/
+vendor/zeroclaw/tests/
+vendor/zeroclaw/dev/*
+!vendor/zeroclaw/dev/config.template.toml

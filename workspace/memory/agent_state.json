@@ -1,0 +1,51 @@
+# Shared memory system for all agents
+# This file is auto-updated by agents during execution
+# Use this as the single source of truth for multi-agent state
+
+{
+  "metadata": {
+    "created_at": "2026-04-10T00:00:00Z",
+    "last_updated": "2026-04-10T00:00:00Z",
+    "version": "1.0"
+  },
+  "agents": {
+    "coordinator": {
+      "id": "coordinator-1",
+      "status": "idle",
+      "role": "orchestrator",
+      "last_activity": null
+    },
+    "coder": {
+      "id": "coder-1",
+      "status": "idle",
+      "role": "code_generation",
+      "last_activity": null
+    },
+    "deployer": {
+      "id": "deployer-1",
+      "status": "idle",
+      "role": "deployment",
+      "last_activity": null
+    },
+    "tester": {
+      "id": "tester-1",
+      "status": "idle",
+      "role": "validation",
+      "last_activity": null
+    }
+  },
+  "tasks": {
+    "current": [],
+    "completed": [],
+    "failed": []
+  },
+  "shared_context": {
+    "project_name": "personal-cloud",
+    "project_status": "uninitialized",
+    "current_goal": null,
+    "decisions": {}
+  },
+  "errors": {
+    "recent": []
+  }
+}
