@@ -1,0 +1,40 @@
+name: CI - E2E
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 3 * * *' # nightly at 03:00 UTC
+
+jobs:
+  e2e-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+      - name: Install deps (tests)
+        run: pip install -r agents/requirements.txt
+      - name: Build all images
+        run: docker compose build --pull
+      - name: Start full stack
+        run: |
+          docker compose up -d
+          for i in $(seq 1 60); do
+            if curl -fsS http://localhost:8001/health >/dev/null 2>&1; then
+              echo coordinator healthy && break
+            fi
+            sleep 5
+          done
+      - name: Run smoke/integration tests
+        run: pytest -q agents/tests/test_smoke.py
+      - name: Collect logs
+        run: tar czf ci-logs.tgz workspace/logs || true
+      - name: Upload logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-logs
+          path: ci-logs.tgz
+      - name: Tear down
+        run: docker compose down --volumes --remove-orphans

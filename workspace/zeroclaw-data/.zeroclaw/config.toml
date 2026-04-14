@@ -1,8 +1,9 @@
 workspace_dir = "/zeroclaw-data/workspace"
 config_path = "/zeroclaw-data/.zeroclaw/config.toml"
 api_key = "http://ollama-brain:11434"
+api_url = "http://ollama-brain:11434"
 default_provider = "ollama"
-default_model = "phi4-mini"
+default_model = "tinyllama"
 default_temperature = 0.7
 
 [gateway]

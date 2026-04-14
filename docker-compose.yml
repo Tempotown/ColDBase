@@ -4,6 +4,7 @@ services:
     container_name: ollama-brain
     ports:
       - "11434:11434"
+    # Persist Ollama model cache on the host so models are retained across restarts
     volumes:
       - ollama-data:/root/.ollama
     environment:
@@ -36,6 +37,8 @@ services:
         condition: service_healthy
     environment:
       API_KEY: http://ollama-brain:11434
+      OLLAMA_API_KEY: http://ollama-brain:11434
+      ZEROCLAW_PROVIDER_URL: http://ollama-brain:11434
       PROVIDER: ollama
       ZEROCLAW_MODEL: ${ZEROCLAW_MODEL:-phi4-mini}
       ZEROCLAW_GATEWAY_PORT: ${ZEROCLAW_GATEWAY_PORT:-42617}
@@ -53,6 +56,11 @@ services:
       timeout: 10s
       retries: 3
       start_period: 15s
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
     networks:
       - zeroclaw-network
 
@@ -64,7 +72,7 @@ services:
     environment:
       ROLE: coordinator
       ZEROCLAW_URL: http://zeroclaw:42617
-      ZEROCLAW_MODEL: ${ZEROCLAW_MODEL:-auto}
+      ZEROCLAW_MODEL: ${ZEROCLAW_MODEL_COORDINATOR:-tinyllama}
       OLLAMA_URL: http://ollama-brain:11434
       ZEROCLAW_API_ENDPOINT: http://ollama-brain:11434
       WORKSPACE_DIR: /workspace
@@ -72,6 +80,17 @@ services:
       - ./workspace:/workspace
     ports:
       - "8001:8000"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
     restart: unless-stopped
     networks:
       - zeroclaw-network
@@ -83,11 +102,23 @@ services:
     container_name: zeroclaw-coder
     environment:
       ROLE: coder
+      ZEROCLAW_MODEL: ${ZEROCLAW_MODEL_CODER:-phi4-mini}
       WORKSPACE_DIR: /workspace
     volumes:
       - ./workspace:/workspace
     ports:
       - "8002:8000"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
     restart: unless-stopped
     networks:
       - zeroclaw-network
@@ -99,12 +130,24 @@ services:
     container_name: zeroclaw-deployer
     environment:
       ROLE: deployer
+      ZEROCLAW_MODEL: ${ZEROCLAW_MODEL_DEPLOYER:-phi4-mini}
       WORKSPACE_DIR: /workspace
     volumes:
       - ./workspace:/workspace
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "8003:8000"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
     restart: unless-stopped
     networks:
       - zeroclaw-network
@@ -116,11 +159,23 @@ services:
     container_name: zeroclaw-tester
     environment:
       ROLE: tester
+      ZEROCLAW_MODEL: ${ZEROCLAW_MODEL_TESTER:-tinyllama}
       WORKSPACE_DIR: /workspace
     volumes:
       - ./workspace:/workspace
     ports:
       - "8004:8000"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.125'
+          memory: 128M
     restart: unless-stopped
     networks:
       - zeroclaw-network
@@ -129,5 +184,9 @@ networks:
   zeroclaw-network:
     driver: bridge
 
+# Using a host-mounted `./ollama-data` directory for Ollama model cache.
 volumes:
+  # Named volume used to persist Ollama model cache across restarts.
+  # This avoids host-bind dependencies and keeps model data managed by Docker.
   ollama-data:
+    driver: local

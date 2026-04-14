@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AgentState",
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "created_at": { "type": "string", "format": "date-time" },
+        "last_updated": { "type": "string", "format": "date-time" },
+        "version": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "agents": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "role": { "type": "string" },
+              "status": { "type": "string", "enum": ["idle", "busy", "offline", "error"] },
+              "last_heartbeat": { "type": ["string", "null"], "format": "date-time" },
+              "current_task": { "type": ["object", "null"] },
+              "capabilities": { "type": "array", "items": { "type": "string" } },
+              "metadata": { "type": "object" }
+            },
+            "required": ["id", "role", "status"],
+            "additionalProperties": true
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "role": { "type": "string" },
+              "status": { "type": "string" },
+              "last_activity": { "type": ["string", "null"] }
+            },
+            "additionalProperties": true
+          }
+        }
+      ]
+    },
+    "tasks": {
+      "type": "object",
+      "properties": {
+        "current": { "type": "array" },
+        "completed": { "type": "array" },
+        "failed": { "type": "array" }
+      },
+      "additionalProperties": true
+    },
+    "shared_context": { "type": "object", "additionalProperties": true },
+    "errors": { "type": "object", "additionalProperties": true }
+  },
+  "additionalProperties": false
+}

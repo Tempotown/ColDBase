@@ -35,6 +35,7 @@ workspace/projects/**/node_modules/
 workspace/projects/**/.git/
 workspace/projects/**/__pycache__/
 workspace/**/*.log
+ldocs/*
 
 # Model files (too large to git)
 ollama-data/

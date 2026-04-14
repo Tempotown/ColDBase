@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Delegation Audit Entry",
+  "type": "object",
+  "properties": {
+    "time": {"type": "number"},
+    "time_iso": {"type": "string"},
+    "request_id": {"type": "integer"},
+    "from": {"type": "string"},
+    "to": {"type": "string"},
+    "task": {"type": "string"},
+    "delegation_depth": {"type": "integer"},
+    "payload_keys": {"type": ["array", "null"], "items": {"type": "string"}},
+    "payload_summary": {"type": ["object", "string", "null"]},
+    "sensitive_hashes": {"type": ["object", "null"]},
+    "decision": {"type": "string", "enum": ["delivered", "rejected", "failed", "test"]},
+    "reason": {"type": ["string", "null"]},
+    "tried_endpoints": {"type": ["array", "null"]},
+    "reached": {"type": ["string", "null"]},
+    "result_summary": {"type": ["string", "null"]},
+    "duration_ms": {"type": "integer"},
+    "host": {"type": "string"}
+  },
+  "required": ["time", "request_id", "from", "to", "task", "decision"],
+  "additionalProperties": true
+}
