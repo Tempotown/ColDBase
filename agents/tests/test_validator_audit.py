@@ -53,12 +53,28 @@ def test_validate_write_file_binary_rejected(tmp_path):
     assert "binary content" in reason
 
 
+def test_validate_write_file_python_ok(tmp_path):
+    app = reload_app_with_workspace(tmp_path)
+    payload = {"path": "projects/tool/resource_tool.py", "content": "print('ok')\n"}
+    ok, reason = app.validate_delegation("coder", "write_file", payload)
+    assert ok is True
+    assert reason is None
+
+
 def test_validate_http_check_private_ip(tmp_path):
     app = reload_app_with_workspace(tmp_path)
     payload = {"url": "http://192.168.1.5"}
     ok, reason = app.validate_delegation("tester", "http_check", payload)
     assert ok is False
     assert "private" in reason or "not allowed" in reason
+
+
+def test_validate_file_check_ok(tmp_path):
+    app = reload_app_with_workspace(tmp_path)
+    payload = {"path": "e2e/hello.txt"}
+    ok, reason = app.validate_delegation("tester", "file_check", payload)
+    assert ok is True
+    assert reason is None
 
 
 def test_audit_delegation_writes_log(tmp_path):

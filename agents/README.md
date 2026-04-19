@@ -124,7 +124,7 @@ When an agent receives a delegation request:
 ```
 
 **Validation:**
-- File extension must be in: `.txt`, `.md`, `.json`, `.yaml`, `.yml`, `.cfg`, `.conf`, `.ini`, `.log`
+- File extension must be in: `.txt`, `.md`, `.json`, `.yaml`, `.yml`, `.cfg`, `.conf`, `.ini`, `.log`, `.py`
 - Path cannot start with `/` or contain `..`
 - Content cannot start with `#!` (no shebangs)
 - Content cannot contain `\x00` (no binary)
@@ -168,6 +168,65 @@ Returns: `{"status": "exists"|"missing", "path": "..."}`
 ```
 
 **Note:** Requires docker socket mounted. Currently returns placeholder message.
+
+---
+
+## Workflow API
+
+The Coordinator now exposes a **generic project pipeline family** plus a few convenience wrappers.
+
+### Generic Pipeline Family
+
+These endpoints back the operator CLI and are the preferred interface for project-level work:
+
+- `POST /workflow/intake`
+  - Creates a `project_pipeline` run
+  - Normalizes the project root and optionally scaffolds a project if it does not exist yet
+- `POST /workflow/runs/{run_id}/inspect`
+  - Detects source shape, languages, frameworks, and candidate verify commands
+- `POST /workflow/runs/{run_id}/verify`
+  - Runs the detected verification strategy or the specialization-specific verifier
+- `POST /workflow/runs/{run_id}/repair`
+  - Invokes the repair adapter for the selected pipeline template
+- `GET /workflow/runs`
+  - Lists recent workflow runs
+- `GET /workflow/runs/{run_id}`
+  - Returns full run state, including steps, stage state, artifacts, and final reasoning
+- `GET /system/overview`
+  - Returns coordinator health, sub-agent health, and recent runs
+
+### Pipeline Run Shape
+
+Coordinator-owned pipeline runs include:
+
+- `family`
+  - `intake_inspect_verify_repair`
+- `template`
+  - Example values: `generic`, `resource-check`, `repo-diagnostics`
+- `project`
+  - Project name, goal, prompt, and normalized project root
+- `inspect`
+  - Detected languages, frameworks, files, and candidate verify commands
+- `verification`
+  - Verification strategy and latest results
+- `artifacts`
+  - Important generated file paths for the run
+- `pipeline`
+  - `current_stage`, `next_stage`, `completed_stages`, `last_failed_stage`, `repair_attempts`
+
+### Specializations Built on the Generic Family
+
+- `POST /workflow/resource-check`
+  - Specialized adapter for environment/resource inspection
+  - Uses the generic family under the hood, then writes and verifies a resource-check bundle
+- `POST /workflow/repo-diagnostics`
+  - Specialized adapter for mixed-language repositories
+  - Produces and verifies:
+    - `STACK_SUMMARY.md`
+    - `VERIFY_COMMANDS.json`
+    - `REPAIR_NOTES.md`
+
+Legacy helper workflows such as `/workflow/hello`, `/workflow/project`, and `/workflow/build-resource-tool` still exist, but the generic family is the long-term operator surface.
 
 ---
 
@@ -304,6 +363,83 @@ pytest agents/tests/ --cov=agents --cov-report=html
 | `test_audit_schema.py` | Audit log entry conformance | JSON schema validation, time fields, request IDs |
 | `test_deploy_compose.py` | Deployer task validation | deploy_compose safety checks |
 | `test_smoke.py` | Basic health & API checks | /health endpoint, /audit/delegation response |
+
+## Hybrid CLI Usage
+
+The operator CLI launcher is `./coldbase` and it opens the workflow REPL backed by `scripts/workflow_cli.py`. The REPL is now a **hybrid** interface with three modes:
+
+- `chat`
+  - Plain text is sent to the Coordinator as conversational input
+- `plan`
+  - Plain text asks the Coordinator for a concise plan
+- `command`
+  - Plain text must be a structured CLI command
+
+### Start the CLI
+
+```bash
+./coldbase
+```
+
+To make `coldbase` available without `./`, install the repo launcher into `~/.local/bin`:
+
+```bash
+./scripts/install_coldbase.sh
+```
+
+If you only want it for the current shell session, you can prepend the repo root to `PATH`:
+
+```bash
+source ./scripts/coldbase-path.sh
+coldbase
+```
+
+### Local Commands That Work Even If Coordinator Is Down
+
+- `help`
+- `--help`
+- `?`
+- `/help`
+- `/health`
+- `mode chat|plan|command`
+
+If the Coordinator is unavailable, the CLI now returns a friendly startup hint instead of a raw requests traceback.
+
+### Slash Commands
+
+- `/chat TEXT`
+  - Send conversational input to the Coordinator
+- `/plan TEXT`
+  - Ask the Coordinator for a concise plan
+- `/cmd ...`
+  - Force a structured command
+- `/mode chat|plan|command`
+  - Switch default REPL behavior
+
+### Structured Workflow Commands
+
+Examples:
+
+```text
+overview
+runs
+show <run_id>
+watch <run_id>
+intake --name "Uploaded Repo" --path projects/my-repo --template generic
+inspect <run_id>
+verify <run_id>
+repair <run_id>
+resource-check --name "Disk Check Tool"
+repo-diagnostics --name "Polyglot Repo" --path projects/polyglot
+```
+
+### Operator Guidance
+
+- Use `chat` when you want coordinator discussion, clarification, or high-level help
+- Use `plan` when you want a staged approach before execution
+- Use structured commands when you want deterministic, auditable workflow execution
+- Prefer the generic `intake/inspect/verify/repair` family for repo and project work
+- Use specialization commands such as `resource-check` or `repo-diagnostics` when you want a known adapter under that same family
 
 ---
 
@@ -444,4 +580,3 @@ docker stats
 ## Contributing
 
 See [DEVELOPMENT.md](../DEVELOPMENT.md) for guidelines on extending and testing the agent system.
-

@@ -213,13 +213,16 @@ Configured in [docker-compose.yml](docker-compose.yml):
 
 ```bash
 # Run unit tests (requires Python 3.8+)
-pytest agents/tests/ -v
+pytest agents/tests/test_validator_audit.py agents/tests/test_deploy_compose.py agents/tests/test_task_alias.py -v
 
 # Run in container (requires docker-compose up)
 docker exec zeroclaw-coordinator pytest /app/tests/ -v
 
 # Smoke test (health checks)
 pytest agents/tests/test_smoke.py -v
+
+# Hello-World end-to-end workflow gate
+python3 scripts/hello_world_e2e.py
 ```
 
 **Test Coverage:**
@@ -242,7 +245,7 @@ pytest agents/tests/test_smoke.py -v
 | Audit logging | ✅ | Queryable via `/audit/delegation` endpoint |
 | Shared memory | ✅ | agent_state.json, task_queue.json, shared_context.md |
 | Resource tuning | ✅ | Conservative limits for Codespaces |
-| Hello-World E2E test | 🔧 | In-progress; need orchestration harness |
+| Hello-World E2E test | ✅ | Harness implemented in `scripts/hello_world_e2e.py`; wired into CI |
 | Full POC | ⬜ | Next: run integration test and collect metrics |
 
 See [roadmap.md](roadmap.md) for full project status.

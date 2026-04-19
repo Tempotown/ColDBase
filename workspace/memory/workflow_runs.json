@@ -1,0 +1,1212 @@
+{
+  "runs": [
+    {
+      "created_at": "2026-04-15T10:15:51.748577Z",
+      "error": null,
+      "final_decision": "success",
+      "final_reasoning": "Coordinator delegated file creation to coder, then delegated verification to tester so the workflow confirms both execution and observable output.",
+      "input": {
+        "content": "Hello from workflow CLI",
+        "path": "e2e/cli-demo.txt"
+      },
+      "requested_by": "coordinator",
+      "run_id": "wf-6c831c49d46b",
+      "status": "completed",
+      "steps": [
+        {
+          "agent": "coder",
+          "details": {
+            "path": "e2e/cli-demo.txt"
+          },
+          "ended_at": "2026-04-15T10:15:51.754345Z",
+          "error": null,
+          "name": "write hello file",
+          "result": {
+            "task_id": 1776248151,
+            "written": "/workspace/e2e/cli-demo.txt"
+          },
+          "started_at": "2026-04-15T10:15:51.749572Z",
+          "status": "completed",
+          "task": "write_file"
+        },
+        {
+          "agent": "tester",
+          "details": {
+            "path": "e2e/cli-demo.txt"
+          },
+          "ended_at": "2026-04-15T10:15:51.757342Z",
+          "error": null,
+          "name": "verify hello file",
+          "result": {
+            "path": "/workspace/e2e/cli-demo.txt",
+            "status": "exists",
+            "task_id": 1776248151
+          },
+          "started_at": "2026-04-15T10:15:51.754625Z",
+          "status": "completed",
+          "task": "file_check"
+        }
+      ],
+      "summary": "hello_world completed for e2e/cli-demo.txt",
+      "updated_at": "2026-04-15T10:15:51.757825Z",
+      "workflow": "hello_world"
+    },
+    {
+      "created_at": "2026-04-15T10:27:41.532876Z",
+      "error": null,
+      "final_decision": "success",
+      "final_reasoning": "Coordinator delegated file creation to coder, then delegated verification to tester so the workflow confirms both execution and observable output.",
+      "input": {
+        "content": "test from cli",
+        "path": "e2e/test.txt"
+      },
+      "requested_by": "coordinator",
+      "run_id": "wf-26d45de29bb8",
+      "status": "completed",
+      "steps": [
+        {
+          "agent": "coder",
+          "details": {
+            "path": "e2e/test.txt"
+          },
+          "ended_at": "2026-04-15T10:27:41.538433Z",
+          "error": null,
+          "name": "write hello file",
+          "result": {
+            "task_id": 1776248861,
+            "written": "/workspace/e2e/test.txt"
+          },
+          "started_at": "2026-04-15T10:27:41.534071Z",
+          "status": "completed",
+          "task": "write_file"
+        },
+        {
+          "agent": "tester",
+          "details": {
+            "path": "e2e/test.txt"
+          },
+          "ended_at": "2026-04-15T10:27:41.541658Z",
+          "error": null,
+          "name": "verify hello file",
+          "result": {
+            "path": "/workspace/e2e/test.txt",
+            "status": "exists",
+            "task_id": 1776248861
+          },
+          "started_at": "2026-04-15T10:27:41.538935Z",
+          "status": "completed",
+          "task": "file_check"
+        }
+      ],
+      "summary": "hello_world completed for e2e/test.txt",
+      "updated_at": "2026-04-15T10:27:41.542055Z",
+      "workflow": "hello_world"
+    },
+    {
+      "created_at": "2026-04-15T10:27:42.542951Z",
+      "error": null,
+      "final_decision": "success",
+      "final_reasoning": "Coordinator created a lightweight project scaffold first so larger work can stay anchored to a documented goal, current session notes, and verified files.",
+      "input": {
+        "goal": "Create a small utility that reports memory and disk details",
+        "project_name": "Disk Check Tool"
+      },
+      "requested_by": "coordinator",
+      "run_id": "wf-52e6c3990768",
+      "status": "completed",
+      "steps": [
+        {
+          "agent": "coder",
+          "details": {
+            "path": "projects/disk-check-tool/README.md"
+          },
+          "ended_at": "2026-04-15T10:27:42.550194Z",
+          "error": null,
+          "name": "write README.md",
+          "result": {
+            "task_id": 1776248862,
+            "written": "/workspace/projects/disk-check-tool/README.md"
+          },
+          "started_at": "2026-04-15T10:27:42.544248Z",
+          "status": "completed",
+          "task": "write_file"
+        },
+        {
+          "agent": "coder",
+          "details": {
+            "path": "projects/disk-check-tool/SESSION.md"
+          },
+          "ended_at": "2026-04-15T10:27:42.554655Z",
+          "error": null,
+          "name": "write SESSION.md",
+          "result": {
+            "task_id": 1776248862,
+            "written": "/workspace/projects/disk-check-tool/SESSION.md"
+          },
+          "started_at": "2026-04-15T10:27:42.550953Z",
+          "status": "completed",
+          "task": "write_file"
+        },
+        {
+          "agent": "tester",
+          "details": {
+            "path": "projects/disk-check-tool/README.md"
+          },
+          "ended_at": "2026-04-15T10:27:42.559186Z",
+          "error": null,
+          "name": "verify README.md",
+          "result": {
+            "path": "/workspace/projects/disk-check-tool/README.md",
+            "status": "exists",
+            "task_id": 1776248862
+          },
+          "started_at": "2026-04-15T10:27:42.555250Z",
+          "status": "completed",
+          "task": "file_check"
+        },
+        {
+          "agent": "tester",
+          "details": {
+            "path": "projects/disk-check-tool/SESSION.md"
+          },
+          "ended_at": "2026-04-15T10:27:42.562612Z",
+          "error": null,
+          "name": "verify SESSION.md",
+          "result": {
+            "path": "/workspace/projects/disk-check-tool/SESSION.md",
+            "status": "exists",
+            "task_id": 1776248862
+          },
+          "started_at": "2026-04-15T10:27:42.559626Z",
+          "status": "completed",
+          "task": "file_check"
+        }
+      ],
+      "summary": "project_bootstrap completed for projects/disk-check-tool",
+      "updated_at": "2026-04-15T10:27:42.563218Z",
+      "workflow": "project_bootstrap"
+    },
+    {
+      "created_at": "2026-04-16T11:52:25.476614Z",
+      "error": null,
+      "final_decision": "success",
+      "final_reasoning": "Coordinator created a lightweight project scaffold first so larger work can stay anchored to a documented goal, current session notes, and verified files.",
+      "input": {
+        "goal": "program",
+        "project_name": "a"
+      },
+      "requested_by": "coordinator",
+      "run_id": "wf-4121bbaef9b2",
+      "status": "completed",
+      "steps": [
+        {
+          "agent": "coder",
+          "details": {
+            "path": "projects/a/README.md"
+          },
+          "ended_at": "2026-04-16T11:52:25.485127Z",
+          "error": null,
+          "name": "write README.md",
+          "result": {
+            "task_id": 1776340345,
+            "written": "/workspace/projects/a/README.md"
+          },
+          "started_at": "2026-04-16T11:52:25.478169Z",
+          "status": "completed",
+          "task": "write_file"
+        },
+        {
+          "agent": "coder",
+          "details": {
+            "path": "projects/a/SESSION.md"
+          },
+          "ended_at": "2026-04-16T11:52:25.488344Z",
+          "error": null,
+          "name": "write SESSION.md",
+          "result": {
+            "task_id": 1776340345,
+            "written": "/workspace/projects/a/SESSION.md"
+          },
+          "started_at": "2026-04-16T11:52:25.485677Z",
+          "status": "completed",
+          "task": "write_file"
+        },
+        {
+          "agent": "tester",
+          "details": {
+            "path": "projects/a/README.md"
+          },
+          "ended_at": "2026-04-16T11:52:25.493367Z",
+          "error": null,
+          "name": "verify README.md",
+          "result": {
+            "path": "/workspace/projects/a/README.md",
+            "status": "exists",
+            "task_id": 1776340345
+          },
+          "started_at": "2026-04-16T11:52:25.488955Z",
+          "status": "completed",
+          "task": "file_check"
+        },
+        {
+          "agent": "tester",
+          "details": {
+            "path": "projects/a/SESSION.md"
+          },
+          "ended_at": "2026-04-16T11:52:25.496292Z",
+          "error": null,
+          "name": "verify SESSION.md",
+          "result": {
+            "path": "/workspace/projects/a/SESSION.md",
+            "status": "exists",
+            "task_id": 1776340345
+          },
+          "started_at": "2026-04-16T11:52:25.493944Z",
+          "status": "completed",
+          "task": "file_check"
+        }
+      ],
+      "summary": "project_bootstrap completed for projects/a",
+      "updated_at": "2026-04-16T11:52:25.496896Z",
+      "workflow": "project_bootstrap"
+    },
+    {
+      "artifacts": {
+        "intake_files": [
+          "projects/list-files/README.md",
+          "projects/list-files/SESSION.md"
+        ]
+      },
+      "created_at": "2026-04-16T12:21:31.253224Z",
+      "error": null,
+      "family": "intake_inspect_verify_repair",
+      "final_decision": null,
+      "final_reasoning": null,
+      "input": {
+        "goal": "build a python program that shows all the files in the repo",
+        "project_name": "list-files",
+        "project_root": "projects/list-files",
+        "prompt": null,
+        "template": "generic"
+      },
+      "inspect": {},
+      "pipeline": {
+        "completed_stages": [
+          "intake"
+        ],
+        "current_stage": "intake",
+        "last_failed_stage": null,
+        "max_repairs": 3,
+        "next_stage": "inspect",
+        "repair_attempts": 0
+      },
+      "project": {
+        "goal": "build a python program that shows all the files in the repo",
+        "name": "list-files",
+        "project_root": "projects/list-files",
+        "prompt": null,
+        "source_type": "generated_project"
+      },
+      "requested_by": "coordinator",
+      "run_id": "wf-8d4bc20efbcb",
+      "status": "pending",
+      "steps": [
+        {
+          "agent": "coder",
+          "details": {
+            "path": "projects/list-files/README.md",
+            "stage": "intake"
+          },
+          "ended_at": "2026-04-16T12:21:31.260463Z",
+          "error": null,
+          "name": "write README.md",
+          "result": {
+            "task_id": 1776342091,
+            "written": "/workspace/projects/list-files/README.md"
+          },
+          "started_at": "2026-04-16T12:21:31.256464Z",
+          "status": "completed",
+          "task": "write_file"
+        },
+        {
+          "agent": "coder",
+          "details": {
+            "path": "projects/list-files/SESSION.md",
+            "stage": "intake"
+          },
+          "ended_at": "2026-04-16T12:21:31.263888Z",
+          "error": null,
+          "name": "write SESSION.md",
+          "result": {
+            "task_id": 1776342091,
+            "written": "/workspace/projects/list-files/SESSION.md"
+          },
+          "started_at": "2026-04-16T12:21:31.261140Z",
+          "status": "completed",
+          "task": "write_file"
+        }
+      ],
+      "summary": "intake completed for generated project projects/list-files",
+      "template": "generic",
+      "updated_at": "2026-04-16T12:21:31.266075Z",
+      "verification": {},
+      "workflow": "project_pipeline"
+    },
+    {
+      "artifacts": {
+        "intake_files": [
+          "projects/file-lister/README.md",
+          "projects/file-lister/SESSION.md"
+        ]
+      },
+      "created_at": "2026-04-16T12:34:28.693753Z",
+      "error": null,
+      "family": "intake_inspect_verify_repair",
+      "final_decision": null,
+      "final_reasoning": null,
+      "input": {
+        "goal": "create a python script named list_files.py that prints all filenames in the current directory",
+        "project_name": "file-lister",
+        "project_root": "projects/file-lister",
+        "prompt": null,
+        "template": "generic"
+      },
+      "inspect": {},
+      "pipeline": {
+        "completed_stages": [
+          "intake"
+        ],
+        "current_stage": "intake",
+        "last_failed_stage": null,
+        "max_repairs": 3,
+        "next_stage": "inspect",
+        "repair_attempts": 0
+      },
+      "project": {
+        "goal": "create a python script named list_files.py that prints all filenames in the current directory",
+        "name": "file-lister",
+        "project_root": "projects/file-lister",
+        "prompt": null,
+        "source_type": "generated_project"
+      },
+      "requested_by": "coordinator",
+      "run_id": "wf-cad5d21e4e3c",
+      "status": "pending",
+      "steps": [
+        {
+          "agent": "coder",
+          "details": {
+            "path": "projects/file-lister/README.md",
+            "stage": "intake"
+          },
+          "ended_at": "2026-04-16T12:34:28.699782Z",
+          "error": null,
+          "name": "write README.md",
+          "result": {
+            "task_id": 1776342868,
+            "written": "/workspace/projects/file-lister/README.md"
+          },
+          "started_at": "2026-04-16T12:34:28.696342Z",
+          "status": "completed",
+          "task": "write_file"
+        },
+        {
+          "agent": "coder",
+          "details": {
+            "path": "projects/file-lister/SESSION.md",
+            "stage": "intake"
+          },
+          "ended_at": "2026-04-16T12:34:28.703512Z",
+          "error": null,
+          "name": "write SESSION.md",
+          "result": {
+            "task_id": 1776342868,
+            "written": "/workspace/projects/file-lister/SESSION.md"
+          },
+          "started_at": "2026-04-16T12:34:28.700602Z",
+          "status": "completed",
+          "task": "write_file"
+        }
+      ],
+      "summary": "intake completed for generated project projects/file-lister",
+      "template": "generic",
+      "updated_at": "2026-04-16T12:34:28.705955Z",
+      "verification": {},
+      "workflow": "project_pipeline"
+    },
+    {
+      "artifacts": {
+        "intake_files": [
+          "projects/auto-coder/README.md",
+          "projects/auto-coder/SESSION.md"
+        ]
+      },
+      "created_at": "2026-04-16T12:43:42.940628Z",
+      "error": null,
+      "family": "intake_inspect_verify_repair",
+      "final_decision": null,
+      "final_reasoning": null,
+      "input": {
+        "goal": "create a python script named hello_auto.py that prints 'Autonomous power'",
+        "project_name": "auto-coder",
+        "project_root": "projects/auto-coder",
+        "prompt": null,
+        "template": "generic"
+      },
+      "inspect": {},
+      "pipeline": {
+        "completed_stages": [
+          "intake"
+        ],
+        "current_stage": "intake",
+        "last_failed_stage": null,
+        "max_repairs": 3,
+        "next_stage": "inspect",
+        "repair_attempts": 0
+      },
+      "project": {
+        "goal": "create a python script named hello_auto.py that prints 'Autonomous power'",
+        "name": "auto-coder",
+        "project_root": "projects/auto-coder",
+        "prompt": null,
+        "source_type": "generated_project"
+      },
+      "requested_by": "coordinator",
+      "run_id": "wf-bed3a22c5dfc",
+      "status": "pending",
+      "steps": [
+        {
+          "agent": "coder",
+          "details": {
+            "path": "projects/auto-coder/README.md",
+            "stage": "intake"
+          },
+          "ended_at": "2026-04-16T12:43:42.947657Z",
+          "error": null,
+          "name": "write README.md",
+          "result": {
+            "task_id": 1776343422,
+            "written": "/workspace/projects/auto-coder/README.md"
+          },
+          "started_at": "2026-04-16T12:43:42.943627Z",
+          "status": "completed",
+          "task": "write_file"
+        },
+        {
+          "agent": "coder",
+          "details": {
+            "path": "projects/auto-coder/SESSION.md",
+            "stage": "intake"
+          },
+          "ended_at": "2026-04-16T12:43:42.953458Z",
+          "error": null,
+          "name": "write SESSION.md",
+          "result": {
+            "task_id": 1776343422,
+            "written": "/workspace/projects/auto-coder/SESSION.md"
+          },
+          "started_at": "2026-04-16T12:43:42.949103Z",
+          "status": "completed",
+          "task": "write_file"
+        }
+      ],
+      "summary": "intake completed for generated project projects/auto-coder",
+      "template": "generic",
+      "updated_at": "2026-04-16T12:43:42.957555Z",
+      "verification": {},
+      "workflow": "project_pipeline"
+    },
+    {
+      "artifacts": {
+        "intake_files": [
+          "projects/final-test/README.md",
+          "projects/final-test/SESSION.md"
+        ]
+      },
+      "created_at": "2026-04-16T13:10:06.145072Z",
+      "error": "HTTPConnectionPool(host='ollama-brain', port=11434): Read timed out. (read timeout=300)",
+      "family": "intake_inspect_verify_repair",
+      "final_decision": null,
+      "final_reasoning": null,
+      "input": {
+        "autonomous": true,
+        "goal": "Create a python script named success.py that prints 'Autonomous workflow fixed'",
+        "project_name": "final-test",
+        "project_root": "projects/final-test",
+        "prompt": null,
+        "template": "generic"
+      },
+      "inspect": {
+        "exists": true,
+        "file_count": 2,
+        "files": [
+          "README.md",
+          "SESSION.md"
+        ],
+        "frameworks": [],
+        "languages": [],
+        "project_root": "projects/final-test",
+        "source_type": "directory",
+        "verify_commands": []
+      },
+      "pipeline": {
+        "autonomous": true,
+        "completed_stages": [
+          "intake",
+          "inspect"
+        ],
+        "current_stage": "implement",
+        "last_failed_stage": "implement",
+        "next_stage": "repair",
+        "repair_attempts": 0
+      },
+      "project": {
+        "frameworks": [],
+        "goal": "Create a python script named success.py that prints 'Autonomous workflow fixed'",
+        "languages": [],
+        "name": "final-test",
+        "project_root": "projects/final-test",
+        "prompt": null,
+        "source_type": "generated_project"
+      },
+      "requested_by": "coordinator",
+      "run_id": "wf-315fe06da4e6",
+      "status": "failed",
+      "steps": [
+        {
+          "agent": "coder",
+          "details": {
+            "path": "projects/final-test/README.md",
+            "stage": "intake"
+          },
+          "ended_at": "2026-04-16T13:10:06.166930Z",
+          "error": null,
+          "name": "write README.md",
+          "result": {
+            "task_id": 1776345006,
+            "written": "/workspace/projects/final-test/README.md"
+          },
+          "started_at": "2026-04-16T13:10:06.152759Z",
+          "status": "completed",
+          "task": "write_file"
+        },
+        {
+          "agent": "coder",
+          "details": {
+            "path": "projects/final-test/SESSION.md",
+            "stage": "intake"
+          },
+          "ended_at": "2026-04-16T13:10:06.180101Z",
+          "error": null,
+          "name": "write SESSION.md",
+          "result": {
+            "task_id": 1776345006,
+            "written": "/workspace/projects/final-test/SESSION.md"
+          },
+          "started_at": "2026-04-16T13:10:06.170898Z",
+          "status": "completed",
+          "task": "write_file"
+        }
+      ],
+      "summary": "HTTPConnectionPool(host='ollama-brain', port=11434): Read timed out. (read timeout=300)",
+      "template": "generic",
+      "updated_at": "2026-04-16T13:15:06.323227Z",
+      "verification": {},
+      "workflow": "project_pipeline"
+    },
+    {
+      "created_at": "2026-04-16T14:16:11.437186Z",
+      "error": null,
+      "final_decision": "success",
+      "final_reasoning": "Coordinator delegated file creation to coder, then delegated verification to tester so the workflow confirms both execution and observable output.",
+      "input": {
+        "content": "Hello from cold CLI",
+        "path": "e2e/test.txt"
+      },
+      "requested_by": "coordinator",
+      "run_id": "wf-94809cbe4712",
+      "status": "completed",
+      "steps": [
+        {
+          "agent": "coder",
+          "details": {
+            "path": "e2e/test.txt"
+          },
+          "ended_at": "2026-04-16T14:16:11.454108Z",
+          "error": null,
+          "name": "write hello file",
+          "result": {
+            "task_id": 1776348971,
+            "written": "/workspace/e2e/test.txt"
+          },
+          "started_at": "2026-04-16T14:16:11.441380Z",
+          "status": "completed",
+          "task": "write_file"
+        },
+        {
+          "agent": "tester",
+          "details": {
+            "path": "e2e/test.txt"
+          },
+          "ended_at": "2026-04-16T14:16:11.471154Z",
+          "error": null,
+          "name": "verify hello file",
+          "result": {
+            "path": "/workspace/e2e/test.txt",
+            "status": "exists",
+            "task_id": 1776348971
+          },
+          "started_at": "2026-04-16T14:16:11.455361Z",
+          "status": "completed",
+          "task": "file_check"
+        }
+      ],
+      "summary": "hello_world completed for e2e/test.txt",
+      "updated_at": "2026-04-16T14:16:11.472265Z",
+      "workflow": "hello_world"
+    },
+    {
+      "created_at": "2026-04-16T14:17:20.310159Z",
+      "error": null,
+      "final_decision": "success",
+      "final_reasoning": "Coordinator delegated file creation to coder, then delegated verification to tester so the workflow confirms both execution and observable output.",
+      "input": {
+        "content": "Hello from cold CLI",
+        "path": "!!"
+      },
+      "requested_by": "coordinator",
+      "run_id": "wf-b4a48ca59176",
+      "status": "completed",
+      "steps": [
+        {
+          "agent": "coder",
+          "details": {
+            "path": "!!"
+          },
+          "ended_at": "2026-04-16T14:17:20.318179Z",
+          "error": null,
+          "name": "write hello file",
+          "result": {
+            "task_id": 1776349040,
+            "written": "/workspace/!!"
+          },
+          "started_at": "2026-04-16T14:17:20.312192Z",
+          "status": "completed",
+          "task": "write_file"
+        },
+        {
+          "agent": "tester",
+          "details": {
+            "path": "!!"
+          },
+          "ended_at": "2026-04-16T14:17:20.322890Z",
+          "error": null,
+          "name": "verify hello file",
+          "result": {
+            "path": "/workspace/!!",
+            "status": "exists",
+            "task_id": 1776349040
+          },
+          "started_at": "2026-04-16T14:17:20.319311Z",
+          "status": "completed",
+          "task": "file_check"
+        }
+      ],
+      "summary": "hello_world completed for !!",
+      "updated_at": "2026-04-16T14:17:20.324418Z",
+      "workflow": "hello_world"
+    },
+    {
+      "created_at": "2026-04-16T14:28:14.334837Z",
+      "error": null,
+      "final_decision": "success",
+      "final_reasoning": "Coordinator delegated file creation to coder, then delegated verification to tester so the workflow confirms both execution and observable output.",
+      "input": {
+        "content": "Latency test",
+        "path": "workspace/e2e/test_latency.txt"
+      },
+      "requested_by": "coordinator",
+      "run_id": "wf-5cfced72b54d",
+      "status": "completed",
+      "steps": [
+        {
+          "agent": "coder",
+          "details": {
+            "path": "workspace/e2e/test_latency.txt"
+          },
+          "ended_at": "2026-04-16T14:28:14.360666Z",
+          "error": null,
+          "name": "write hello file",
+          "result": {
+            "task_id": 1776349694,
+            "written": "/workspace/workspace/e2e/test_latency.txt"
+          },
+          "started_at": "2026-04-16T14:28:14.337115Z",
+          "status": "completed",
+          "task": "write_file"
+        },
+        {
+          "agent": "tester",
+          "details": {
+            "path": "workspace/e2e/test_latency.txt"
+          },
+          "ended_at": "2026-04-16T14:28:14.376433Z",
+          "error": null,
+          "name": "verify hello file",
+          "result": {
+            "path": "/workspace/workspace/e2e/test_latency.txt",
+            "status": "exists",
+            "task_id": 1776349694
+          },
+          "started_at": "2026-04-16T14:28:14.361960Z",
+          "status": "completed",
+          "task": "file_check"
+        }
+      ],
+      "summary": "hello_world completed for workspace/e2e/test_latency.txt",
+      "updated_at": "2026-04-16T14:28:14.377733Z",
+      "workflow": "hello_world"
+    },
+    {
+      "created_at": "2026-04-16T14:28:24.784188Z",
+      "error": null,
+      "final_decision": "success",
+      "final_reasoning": "Coordinator created a lightweight project scaffold first so larger work can stay anchored to a documented goal, current session notes, and verified files.",
+      "input": {
+        "goal": "Write a simple python script that prints disk usage",
+        "project_name": "Test project"
+      },
+      "requested_by": "coordinator",
+      "run_id": "wf-84297ee0ec93",
+      "status": "completed",
+      "steps": [
+        {
+          "agent": "coder",
+          "details": {
+            "path": "projects/test-project/README.md"
+          },
+          "ended_at": "2026-04-16T14:28:24.794944Z",
+          "error": null,
+          "name": "write README.md",
+          "result": {
+            "task_id": 1776349704,
+            "written": "/workspace/projects/test-project/README.md"
+          },
+          "started_at": "2026-04-16T14:28:24.787141Z",
+          "status": "completed",
+          "task": "write_file"
+        },
+        {
+          "agent": "coder",
+          "details": {
+            "path": "projects/test-project/SESSION.md"
+          },
+          "ended_at": "2026-04-16T14:28:24.800775Z",
+          "error": null,
+          "name": "write SESSION.md",
+          "result": {
+            "task_id": 1776349704,
+            "written": "/workspace/projects/test-project/SESSION.md"
+          },
+          "started_at": "2026-04-16T14:28:24.796547Z",
+          "status": "completed",
+          "task": "write_file"
+        },
+        {
+          "agent": "tester",
+          "details": {
+            "path": "projects/test-project/README.md"
+          },
+          "ended_at": "2026-04-16T14:28:24.807054Z",
+          "error": null,
+          "name": "verify README.md",
+          "result": {
+            "path": "/workspace/projects/test-project/README.md",
+            "status": "exists",
+            "task_id": 1776349704
+          },
+          "started_at": "2026-04-16T14:28:24.802602Z",
+          "status": "completed",
+          "task": "file_check"
+        },
+        {
+          "agent": "tester",
+          "details": {
+            "path": "projects/test-project/SESSION.md"
+          },
+          "ended_at": "2026-04-16T14:28:24.812152Z",
+          "error": null,
+          "name": "verify SESSION.md",
+          "result": {
+            "path": "/workspace/projects/test-project/SESSION.md",
+            "status": "exists",
+            "task_id": 1776349704
+          },
+          "started_at": "2026-04-16T14:28:24.808906Z",
+          "status": "completed",
+          "task": "file_check"
+        }
+      ],
+      "summary": "project_bootstrap completed for projects/test-project",
+      "updated_at": "2026-04-16T14:28:24.813476Z",
+      "workflow": "project_bootstrap"
+    },
+    {
+      "artifacts": {
+        "intake_files": [
+          "projects/autonomous-test/README.md",
+          "projects/autonomous-test/SESSION.md"
+        ]
+      },
+      "created_at": "2026-04-16T14:29:37.001465Z",
+      "error": "no verification strategy detected for this project",
+      "family": "intake_inspect_verify_repair",
+      "final_decision": null,
+      "final_reasoning": null,
+      "implementation": {
+        "actions_count": 0
+      },
+      "input": {
+        "autonomous": true,
+        "goal": "Create a file named workspace/auto_success.txt with the word SUCCESS in it",
+        "project_name": "Autonomous Test",
+        "project_root": "projects/autonomous-test",
+        "prompt": null,
+        "template": "generic"
+      },
+      "inspect": {
+        "exists": true,
+        "file_count": 2,
+        "files": [
+          "README.md",
+          "SESSION.md"
+        ],
+        "frameworks": [],
+        "languages": [],
+        "project_root": "projects/autonomous-test",
+        "source_type": "directory",
+        "verify_commands": []
+      },
+      "pipeline": {
+        "autonomous": true,
+        "completed_stages": [
+          "intake",
+          "inspect",
+          "implement"
+        ],
+        "current_stage": "verify",
+        "last_failed_stage": "verify",
+        "next_stage": "repair",
+        "repair_attempts": 0
+      },
+      "project": {
+        "frameworks": [],
+        "goal": "Create a file named workspace/auto_success.txt with the word SUCCESS in it",
+        "languages": [],
+        "name": "Autonomous Test",
+        "project_root": "projects/autonomous-test",
+        "prompt": null,
+        "source_type": "generated_project"
+      },
+      "requested_by": "coordinator",
+      "run_id": "wf-1b6193214384",
+      "status": "failed",
+      "steps": [
+        {
+          "agent": "coder",
+          "details": {
+            "path": "projects/autonomous-test/README.md",
+            "stage": "intake"
+          },
+          "ended_at": "2026-04-16T14:29:37.013379Z",
+          "error": null,
+          "name": "write README.md",
+          "result": {
+            "task_id": 1776349777,
+            "written": "/workspace/projects/autonomous-test/README.md"
+          },
+          "started_at": "2026-04-16T14:29:37.008466Z",
+          "status": "completed",
+          "task": "write_file"
+        },
+        {
+          "agent": "coder",
+          "details": {
+            "path": "projects/autonomous-test/SESSION.md",
+            "stage": "intake"
+          },
+          "ended_at": "2026-04-16T14:29:37.019601Z",
+          "error": null,
+          "name": "write SESSION.md",
+          "result": {
+            "task_id": 1776349777,
+            "written": "/workspace/projects/autonomous-test/SESSION.md"
+          },
+          "started_at": "2026-04-16T14:29:37.015227Z",
+          "status": "completed",
+          "task": "write_file"
+        }
+      ],
+      "summary": "no verification strategy detected for this project",
+      "template": "generic",
+      "updated_at": "2026-04-16T14:45:32.345300Z",
+      "verification": {},
+      "workflow": "project_pipeline"
+    },
+    {
+      "artifacts": {
+        "intake_files": [
+          "projects/final-autonomous-test/README.md",
+          "projects/final-autonomous-test/SESSION.md"
+        ]
+      },
+      "created_at": "2026-04-16T14:47:15.387408Z",
+      "error": "HTTPConnectionPool(host='ollama-brain', port=11434): Read timed out. (read timeout=300)",
+      "family": "intake_inspect_verify_repair",
+      "final_decision": null,
+      "final_reasoning": null,
+      "implementation": {
+        "actions_count": 0
+      },
+      "input": {
+        "autonomous": true,
+        "goal": "Create a file named workspace/final_test.txt with content: SUCCESS_LLAMA",
+        "project_name": "Final Autonomous Test",
+        "project_root": "projects/final-autonomous-test",
+        "prompt": null,
+        "template": "generic"
+      },
+      "inspect": {
+        "exists": true,
+        "file_count": 2,
+        "files": [
+          "README.md",
+          "SESSION.md"
+        ],
+        "frameworks": [],
+        "languages": [],
+        "project_root": "projects/final-autonomous-test",
+        "source_type": "directory",
+        "verify_commands": []
+      },
+      "pipeline": {
+        "autonomous": true,
+        "completed_stages": [
+          "intake",
+          "inspect",
+          "implement"
+        ],
+        "current_stage": "implement",
+        "last_failed_stage": "implement",
+        "next_stage": "repair",
+        "repair_attempts": 0
+      },
+      "project": {
+        "frameworks": [],
+        "goal": "Create a file named workspace/final_test.txt with content: SUCCESS_LLAMA",
+        "languages": [],
+        "name": "Final Autonomous Test",
+        "project_root": "projects/final-autonomous-test",
+        "prompt": null,
+        "source_type": "generated_project"
+      },
+      "requested_by": "coordinator",
+      "run_id": "wf-12b7e302e2a7",
+      "status": "failed",
+      "steps": [
+        {
+          "agent": "coder",
+          "details": {
+            "path": "projects/final-autonomous-test/README.md",
+            "stage": "intake"
+          },
+          "ended_at": "2026-04-16T14:47:15.403210Z",
+          "error": null,
+          "name": "write README.md",
+          "result": {
+            "task_id": 1776350835,
+            "written": "/workspace/projects/final-autonomous-test/README.md"
+          },
+          "started_at": "2026-04-16T14:47:15.393271Z",
+          "status": "completed",
+          "task": "write_file"
+        },
+        {
+          "agent": "coder",
+          "details": {
+            "path": "projects/final-autonomous-test/SESSION.md",
+            "stage": "intake"
+          },
+          "ended_at": "2026-04-16T14:47:15.408904Z",
+          "error": null,
+          "name": "write SESSION.md",
+          "result": {
+            "task_id": 1776350835,
+            "written": "/workspace/projects/final-autonomous-test/SESSION.md"
+          },
+          "started_at": "2026-04-16T14:47:15.404845Z",
+          "status": "completed",
+          "task": "write_file"
+        }
+      ],
+      "summary": "HTTPConnectionPool(host='ollama-brain', port=11434): Read timed out. (read timeout=300)",
+      "template": "generic",
+      "updated_at": "2026-04-16T14:52:51.827371Z",
+      "verification": {},
+      "workflow": "project_pipeline"
+    },
+    {
+      "created_at": "2026-04-18T09:44:40.400893Z",
+      "error": null,
+      "final_decision": "success",
+      "final_reasoning": "Coordinator delegated file creation to coder, then delegated verification to tester so the workflow confirms both execution and observable output.",
+      "input": {
+        "content": "Hello from cold CLI",
+        "path": "e2e/test.txt"
+      },
+      "requested_by": "coordinator",
+      "run_id": "wf-187c71047d3c",
+      "status": "completed",
+      "steps": [
+        {
+          "agent": "coder",
+          "details": {
+            "path": "e2e/test.txt"
+          },
+          "ended_at": "2026-04-18T09:44:40.410920Z",
+          "error": null,
+          "name": "write hello file",
+          "result": {
+            "task_id": 1776505480,
+            "written": "/workspace/e2e/test.txt"
+          },
+          "started_at": "2026-04-18T09:44:40.403694Z",
+          "status": "completed",
+          "task": "write_file"
+        },
+        {
+          "agent": "tester",
+          "details": {
+            "path": "e2e/test.txt"
+          },
+          "ended_at": "2026-04-18T09:44:40.416760Z",
+          "error": null,
+          "name": "verify hello file",
+          "result": {
+            "path": "/workspace/e2e/test.txt",
+            "status": "exists",
+            "task_id": 1776505480
+          },
+          "started_at": "2026-04-18T09:44:40.412623Z",
+          "status": "completed",
+          "task": "file_check"
+        }
+      ],
+      "summary": "hello_world completed for e2e/test.txt",
+      "updated_at": "2026-04-18T09:44:40.418540Z",
+      "workflow": "hello_world"
+    },
+    {
+      "artifacts": {
+        "intake_files": [
+          "resource/README.md",
+          "resource/SESSION.md"
+        ]
+      },
+      "created_at": "2026-04-19T03:08:52.997108Z",
+      "error": "no verification strategy detected for this project",
+      "family": "intake_inspect_verify_repair",
+      "final_decision": null,
+      "final_reasoning": null,
+      "implementation": {
+        "actions_count": 0
+      },
+      "input": {
+        "autonomous": true,
+        "goal": "check",
+        "project_name": "a",
+        "project_root": "resource",
+        "prompt": null,
+        "template": "generic"
+      },
+      "inspect": {
+        "exists": true,
+        "file_count": 2,
+        "files": [
+          "README.md",
+          "SESSION.md"
+        ],
+        "frameworks": [],
+        "languages": [],
+        "project_root": "resource",
+        "source_type": "directory",
+        "verify_commands": []
+      },
+      "pipeline": {
+        "autonomous": true,
+        "completed_stages": [
+          "intake",
+          "inspect",
+          "implement"
+        ],
+        "current_stage": "verify",
+        "last_failed_stage": "verify",
+        "next_stage": "repair",
+        "repair_attempts": 0
+      },
+      "project": {
+        "frameworks": [],
+        "goal": "check",
+        "languages": [],
+        "name": "a",
+        "project_root": "resource",
+        "prompt": null,
+        "source_type": "generated_project"
+      },
+      "requested_by": "coordinator",
+      "run_id": "wf-1708a6890456",
+      "status": "failed",
+      "steps": [
+        {
+          "agent": "coder",
+          "details": {
+            "path": "resource/README.md",
+            "stage": "intake"
+          },
+          "ended_at": "2026-04-19T03:08:53.157514Z",
+          "error": null,
+          "name": "write README.md",
+          "result": {
+            "task_id": 1776568133,
+            "written": "/workspace/resource/README.md"
+          },
+          "started_at": "2026-04-19T03:08:53.011521Z",
+          "status": "completed",
+          "task": "write_file"
+        },
+        {
+          "agent": "coder",
+          "details": {
+            "path": "resource/SESSION.md",
+            "stage": "intake"
+          },
+          "ended_at": "2026-04-19T03:08:53.163804Z",
+          "error": null,
+          "name": "write SESSION.md",
+          "result": {
+            "task_id": 1776568133,
+            "written": "/workspace/resource/SESSION.md"
+          },
+          "started_at": "2026-04-19T03:08:53.159380Z",
+          "status": "completed",
+          "task": "write_file"
+        }
+      ],
+      "summary": "no verification strategy detected for this project",
+      "template": "generic",
+      "updated_at": "2026-04-19T03:11:32.803617Z",
+      "verification": {},
+      "workflow": "project_pipeline"
+    }
+  ]
+}

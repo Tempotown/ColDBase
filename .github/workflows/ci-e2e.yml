@@ -22,19 +22,26 @@ jobs:
         run: |
           docker compose up -d
           for i in $(seq 1 60); do
-            if curl -fsS http://localhost:8001/health >/dev/null 2>&1; then
-              echo coordinator healthy && break
+            if curl -fsS http://localhost:8001/health >/dev/null 2>&1 \
+              && curl -fsS http://localhost:8002/health >/dev/null 2>&1 \
+              && curl -fsS http://localhost:8004/health >/dev/null 2>&1; then
+              echo coordinator, coder, tester healthy && break
             fi
             sleep 5
           done
       - name: Run smoke/integration tests
         run: pytest -q agents/tests/test_smoke.py
+      - name: Run Hello-World E2E harness
+        run: python3 scripts/hello_world_e2e.py
       - name: Collect logs
+        if: always()
         run: tar czf ci-logs.tgz workspace/logs || true
       - name: Upload logs
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: ci-logs
           path: ci-logs.tgz
       - name: Tear down
+        if: always()
         run: docker compose down --volumes --remove-orphans

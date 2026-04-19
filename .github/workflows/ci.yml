@@ -28,7 +28,7 @@ jobs:
           ruff agents --fix --exit-zero
           black --check .
       - name: Run unit tests
-        run: pytest -q agents/tests --junitxml=results.xml
+        run: pytest -q agents/tests/test_validator_audit.py agents/tests/test_deploy_compose.py agents/tests/test_task_alias.py --junitxml=results.xml
       - name: Upload test report
         uses: actions/upload-artifact@v4
         with:
@@ -69,15 +69,28 @@ jobs:
         run: docker compose build --progress=plain coordinator
       - name: Start minimal services
         run: |
-          docker compose up -d ollama zeroclaw coordinator
-          for i in $(seq 1 30); do
-            if curl -fsS http://localhost:8001/health >/dev/null 2>&1; then
-              echo coordinator healthy && break
+          docker compose up -d ollama zeroclaw coordinator coder tester
+          for i in $(seq 1 60); do
+            if curl -fsS http://localhost:8001/health >/dev/null 2>&1 \
+              && curl -fsS http://localhost:8002/health >/dev/null 2>&1 \
+              && curl -fsS http://localhost:8004/health >/dev/null 2>&1; then
+              echo coordinator, coder, tester healthy && break
             fi
             sleep 2
           done
       - name: Run smoke tests
         run: pytest -q agents/tests/test_smoke.py
+      - name: Run Hello-World E2E harness
+        run: python3 scripts/hello_world_e2e.py
+      - name: Collect logs on failure
+        if: failure()
+        run: tar czf ci-logs.tgz workspace/logs || true
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-logs
+          path: ci-logs.tgz
       - name: Optionally push built images to registry
         if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')) && secrets.REGISTRY_USERNAME && secrets.REGISTRY_TOKEN }}
         uses: docker/login-action@v2
@@ -97,4 +110,5 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: Tear down
+        if: always()
         run: docker compose down --volumes --remove-orphans

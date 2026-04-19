@@ -29,4 +29,3 @@ def test_audit_endpoint_returns_json():
     js = r.json()
     assert isinstance(js, dict)
     assert "count" in js
-*** End Patch
